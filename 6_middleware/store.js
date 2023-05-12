@@ -47,4 +47,8 @@ const reducer = (state = initialState, action) => {
 const store = redux.createStore(reducer, applyMiddleware(logger))
 // store.subscribe(() => console.log(store.getState())) // <<<<<<<<<<<<< we used "logger" instead
 console.log("initState", store.getState())
+
+// dispatch an action ==> Notice: logger Middleware happening
 store.dispatch(changeStreet('btata'))
+// one more time time :)
+store.dispatch(changeStreet('yesooooo'))

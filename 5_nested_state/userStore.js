@@ -26,7 +26,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 address: {
-                    ...state.address, // <<<<<<<<<< keeping the other "address" details
+                    ...state.address, // <<<<<<<<<< keeping the other "address" details unchanged
                     street: action.payload
                 }
             }
