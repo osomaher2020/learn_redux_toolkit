@@ -29,7 +29,7 @@ const orderCake = () => {
 const reStockCake = (qty) => {
     return {
         type: RESTOCK_CAKE,
-        quantity: qty
+        quantity: qty // will affect on "numOfCakes" property
     }
 }
 // Action 3 -- orderWithDetails <<<<<<<<<<<<<<<<
@@ -55,21 +55,21 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 numOfCakes: state.numOfCakes + action.quantity // <<<<<<<<<<<<< dynamically used action.property
             }
-        case DETAILED_ORDER: // <<<<<<<<<<<<<<<<<<<<<
+        case DETAILED_ORDER: // <<<<<<<<<<<<<<<<<<<<< :)
             return {
                 ...state,
                 numOfCakes: state.numOfCakes - action.quantity,
                 details: action.details // <<<<<<< Object property
             }
         default:
-            return state // noChange on initialState
+            return state // no Change on initialState
     }
 }
 
 
 // init REDUX
 const store = redux.createStore(reducer) // Accepts (reducer) which is responsible for --> state update
-console.log("initial_state", store.getState())
+console.log("-- initial_state --", store.getState())
 
 // store.subscribe() runs on every state change
 const unsubscribe = store.subscribe(() => console.log("updated_state", store.getState()))
@@ -81,7 +81,7 @@ store.dispatch(orderCake())
 store.dispatch(orderCake())
 
 
-// dispatching RESTOCK_CAKE <<<<<<<<<<<<<<<<<<<<<< Action 2
+// dispatching RESTOCK_CAKE <<<<<<<<<<<<<<<<<<<<<< Action 2 <<<<<<<<<<<<<<<<
 store.dispatch(reStockCake(3)) // it will go back to --> quantity: 10
 
 
