@@ -1,7 +1,10 @@
 const redux = require('redux')
 
 
-// =================== Cake ===============
+// ===================================================================
+// ============================= Cake ================================
+// ===================================================================
+
 // 1- State
 const initialCakeState = {
     numOfCakes: 10
@@ -49,7 +52,7 @@ const cakeReducer = (state = initialCakeState, action) => {
 
 // init REDUX
 const cakeStore = redux.createStore(cakeReducer) // Accepts (reducer) which is responsible for --> state update
-console.log("initial_state", cakeStore.getState())
+console.log("--- initial_state ---", cakeStore.getState())
 
 // store.subscribe() runs on every state change
 const unsubscribeCake = cakeStore.subscribe(() => console.log("updated_state", cakeStore.getState()))
@@ -71,7 +74,11 @@ unsubscribeCake()
 
 
 
-// =================== IceCream ===============
+
+// ===================================================================
+// ============================= IceCream ============================
+// ===================================================================
+
 // 1- State
 const initialIceCreamState = {
     numOfIceCreams: 10
@@ -82,17 +89,17 @@ const ORDER_ICECREAM = 'ORDER_ICECREAM'
 const RESTOCK_ICECREAM = 'RESTOCK_ICECREAM'
 
 // 2- Actions on cakes --> always returns:--> Object
-const orderIceCream = (qty = 1) => {
+const orderIceCream = (qty = 1) => { // >>> qty with a default calue -- so, it is [optional]
     return {
         type: ORDER_ICECREAM,
-        payload: qty
+        payload: qty    // !!! NOTE !!! ==> unified "payload"
     }
 }
 // Action 2 <<<<<<<<<<<<<<<<<<<<<<
 const reStockIcecream = (qty = 1) => {
     return {
         type: RESTOCK_ICECREAM,
-        payload: qty
+        payload: qty    // !!! NOTE !!! ==> unified "payload"
     }
 }
 
@@ -118,7 +125,7 @@ const icecreamReducer = (state = initialIceCreamState, action) => {
 
 // init REDUX
 const icecreamStore = redux.createStore(icecreamReducer)
-console.log("initial_icecream_state", icecreamStore.getState())
+console.log("--- initial_icecream_state ---", icecreamStore.getState())
 
 // store.subscribe() runs on every state change [dispatch]
 const unsubscribeIcecream = icecreamStore.subscribe(() => console.log("updated_icecream_state", icecreamStore.getState()))
@@ -127,11 +134,11 @@ const unsubscribeIcecream = icecreamStore.subscribe(() => console.log("updated_i
 icecreamStore.dispatch(orderIceCream())
 // unsubscribe() // try to uncomment
 icecreamStore.dispatch(orderIceCream())
-icecreamStore.dispatch(orderIceCream())
+icecreamStore.dispatch(orderIceCream(5))
 
 
 // dispatching RESTOCK_CAKE <<<<<<<<<<<<<<<<<<<<<< Action 2
-icecreamStore.dispatch(reStockIcecream(3)) // it will go back to --> quantity: 10
+icecreamStore.dispatch(reStockIcecream(7)) // it will go back to --> quantity: 10
 
 // stop monitoring the state change
 unsubscribeIcecream()
@@ -140,18 +147,22 @@ unsubscribeIcecream()
 
 
 
-
-// >>>>>>>>>>>>>>>>>>>>> Combining Reducers <<<<<<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>>>>>>>>>>> Combining Reducers <<<<<<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const rootReducer = redux.combineReducers({
     cake: cakeReducer,
     icecream: icecreamReducer
-})
+}) // >> Now: I've 2 employees --> 1 for Cake & 1 for IceCream  :)
 
 const store = redux.createStore(rootReducer)
 
-const unSubscribeStore = store.subscribe(() => console.log("root_store", store.getState()))
+const unSubscribeStore = store.subscribe(() => console.log(" >>> root_store <<<", store.getState()))
+
 
 // >>>>>> dispatching Actions using rootReducer
 // dispatching Action
 console.log("---------- rootReducer [Combined_Reducers] -----------------")
-store.dispatch(orderIceCream())
+store.dispatch(orderIceCream(5))
+store.dispatch(orderCake())
+// Now: It will automatically knows which REDUCER (employee) to use depending on: the passed ACTION 
