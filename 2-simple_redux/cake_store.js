@@ -37,12 +37,20 @@ const reducer = (state = initialState, action) => {
 const store = redux.createStore(reducer) // <<<<<<<< Accepts (reducer) which is responsible for --> state update
 console.log("initial_state", store.getState())
 
-// store.subscribe() runs on every state change
-const unsubscribe = store.subscribe(() => console.log("updated_state", store.getState()))
+// store.subscribe() runs on every state change -- [you can perform any code needed on every state change]
+const unsubscribe = store.subscribe(() => {
+    // log the new state
+    console.log("updated_state", store.getState())
+
+    // some other func stuff
+    const x = 5
+    const y = 6
+    console.log("stuff: x+y="+ (x+y))
+})
 
 // dispatching Action
 store.dispatch(orderCake())
-// unsubscribe() // <<<<<<<<<<<<<<<< try to uncomment
+//unsubscribe() // <<<<<<<<<<<<<<<< try to uncomment <<<<<< it stops the subscribed function() -- which run every change
 store.dispatch(orderCake())
 store.dispatch(orderCake())
 
