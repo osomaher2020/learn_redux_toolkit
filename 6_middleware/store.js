@@ -4,7 +4,6 @@ const reduxLogger = require('redux-logger')
 // MiddleWare
 // 1- happens between: dispatching an Action & its Reducer
 // 2- used for: Async tasks & logging
-const applyMiddleware = redux.applyMiddleware
 // [yarn add redux-logger]
 const logger = reduxLogger.createLogger() // <<<<<<<<<< middleware showing (prev_state, action, next_state)
 
@@ -44,7 +43,7 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-const store = redux.createStore(reducer, applyMiddleware(logger))
+const store = redux.createStore(reducer, redux.applyMiddleware(logger))
 // store.subscribe(() => console.log(store.getState())) // <<<<<<<<<<<<< we used "logger" instead
 console.log("initState", store.getState())
 
