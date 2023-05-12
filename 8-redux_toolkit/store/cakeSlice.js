@@ -1,6 +1,6 @@
 const createSlice = require("@reduxjs/toolkit").createSlice
 
-const cakeSlice = createSlice({
+const cakeSlice = createSlice({ // <<<<< returns {reducer , actions}
     name: 'cake',
     initialState: {
         numberOfCakes: 10
